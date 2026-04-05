@@ -1,27 +1,24 @@
 import { useEffect, useState, useCallback } from "react";
-import { getExamById, submitExam, type ExamDetailResponse } from "../services/exams.service";
-import type { SubmitExamPayload } from "../types/submitExam";
+import { getExamById, submitExam, type ExamDetailResponse } from "../../services/exams.service";
 
 // Estado de respuestas: clave = questionId, valor = optionId seleccionada
 type AnswerState = Record<number, number>;
 
 export const useExamSession = (examId: number) => {
-    // --- Estados principales ---
-    const [exam, setExam] = useState<ExamDetailResponse | null>(null); // información del examen
-    const [answers, setAnswers] = useState<AnswerState>({});            // respuestas del usuario
-    const [loading, setLoading] = useState(true);                       // estado de carga
-    const [submitting, setSubmitting] = useState(false);                // estado de envío
-    const [score, setScore] = useState<number | null>(null);            // puntaje final
-    const [error, setError] = useState<string | null>(null);            // errores de carga/envío
+    const [exam, setExam] = useState<ExamDetailResponse | null>(null);
+    const [answers, setAnswers] = useState<AnswerState>({});
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
+    const [score, setScore] = useState<number | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-    // --- Cargar examen desde el backend ---
     useEffect(() => {
-        if (!examId) return; // evita llamadas si no hay examId
+        if (!examId) return;
 
         const fetchExam = async () => {
             setLoading(true);
             try {
-                const data = await getExamById(examId); // fetch del examen
+                const data = await getExamById(examId); // devuelve ExamDetailResponse
                 setExam(data);
             } catch {
                 setError("Error loading exam");
@@ -30,18 +27,16 @@ export const useExamSession = (examId: number) => {
             }
         };
 
-        fetchExam(); // llamar a la función async
+        fetchExam();
     }, [examId]);
 
-    // --- Guardar la respuesta de una pregunta ---
     const selectAnswer = useCallback((questionId: number, optionId: number) => {
-        setAnswers((prev) => ({
+        setAnswers(prev => ({
             ...prev,
-            [questionId]: optionId, // actualiza solo la pregunta seleccionada
+            [questionId]: optionId,
         }));
     }, []);
 
-    // --- Enviar examen al backend ---
     const handleSubmit = useCallback(async () => {
         if (!exam) return;
 
@@ -49,19 +44,17 @@ export const useExamSession = (examId: number) => {
         setError(null);
 
         try {
-            const payload: SubmitExamPayload = { answers };       // envía las respuestas en payload
-            const response = await submitExam(examId, payload);   // llamada al service
-            setScore(response.result.puntaje);                    // actualizar puntaje
+            const response = await submitExam(examId, answers); // ✅ enviar directamente answers
+            setScore(response.result.puntaje);
             return response;
         } catch {
             setError("Error submitting exam");
             throw new Error("Failed to submit exam");
         } finally {
-            setSubmitting(false); // asegura que el estado de submitting siempre se reinicie
+            setSubmitting(false);
         }
     }, [exam, examId, answers]);
 
-    // --- Valores que el componente puede usar ---
     return {
         exam,
         answers,

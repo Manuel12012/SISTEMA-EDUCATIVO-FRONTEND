@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import type {Course} from "../../types/course"
 import CourseCard from "./CourseCard"
 

@@ -1,5 +1,4 @@
 import { api } from "./api";
-import type { Enrollment } from "../types/Enrollment";
 import type { Course } from "../types/course";
 
 // Crear inscripción

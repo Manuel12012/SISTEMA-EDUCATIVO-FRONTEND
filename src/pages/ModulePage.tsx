@@ -1,10 +1,10 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useModule} from "../hooks/core/useModule";
-import {use, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useCourses} from "../hooks/core/useCourses";
 import type {Lesson, LessonType} from "../types/lesson";
 import type {Module} from "../types/module";
-import {FaArrowLeft, FaTrash, FaRedo, FaSearch} from "react-icons/fa";
+import {FaArrowLeft, FaRedo, FaSearch} from "react-icons/fa";
 import {MdCreateNewFolder} from "react-icons/md";
 import {toast} from "react-toastify";
 
@@ -17,8 +17,6 @@ const ModulePage = () => {
     modules,
     loading,
     error,
-    fetchModuleById,
-    fetchModules,
     createModule,
     updateModule,
     deleteModule,
@@ -43,7 +41,7 @@ const ModulePage = () => {
     Record<number, Lesson[]>
   >({});
 
-  const [leccionesEditables, setLeccionesEditables] = useState<
+  const [, setLeccionesEditables] = useState<
     Record<number, Lesson[]>
   >({});
 
@@ -58,7 +56,7 @@ const ModulePage = () => {
       }
     >
   >({}); // Falta implmentar hooks de Lessons
-  const {fetchCourseById, fetchLessonsByModule, createLesson, updateLessons} = useCourses();
+  const {fetchCourseById, fetchLessonsByModule, createLesson} = useCourses();
 
   const [displayedModules, setDisplayedModules] = useState<Module[]>([]);
 

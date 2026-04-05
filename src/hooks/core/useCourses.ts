@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Course, CourseDTOCreate, getStudents, student } from "../../types/course";
+import type { Course, CourseDTOCreate, student } from "../../types/course";
 import {
     getCourseById, getCourses, createCourse as createCourseService
     , updateCourse as updateCourseService
@@ -19,9 +19,7 @@ import {
     updateLesson as updateLessonService, deleteLesson as deleteLessonService,
     getLessonsByModule
 } from "../../services/lessons.service";
-import type { Enrollment } from "../../types/Enrollment";
 import { myCourses } from "../../services/Enrollments.service";
-import type { User } from "../../types/user";
 
 
 
@@ -29,7 +27,6 @@ export const useCourses = () => {
     // COURSES
     const [courses, setCourses] = useState<Course[]>([]);
     const [course, setCourse] = useState<Course | null>(null);
-    const [courseStudent, setCourseStudent] = useState<Enrollment[]>([]);
     const [students, setStudents] = useState<student[]>([]);
 
     // MODULES

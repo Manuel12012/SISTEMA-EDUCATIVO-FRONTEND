@@ -4,7 +4,6 @@ import {
     getExamOptions, getExamOptionsById, createExamOption as createExamOptionService, updateExamOption as updateExamOptionService, deleteExamOption as deleteExamOptionService,
     getExamOptionsByQuestion as getExamOptionsByQuestionService
 } from "../../services/examOptions.service";
-import type { ExamDTOCreate } from "../../types/exam";
 
 
 

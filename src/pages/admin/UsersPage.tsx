@@ -1,4 +1,4 @@
-import {use, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useUser} from "../../hooks/core/useUser";
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from "react-toastify";
@@ -6,7 +6,6 @@ import type {User, UserDTOCreate} from "../../types/user";
 
 const UsersPage = () => {
   const {
-    user,
     users,
     loading,
     error,
@@ -14,7 +13,7 @@ const UsersPage = () => {
     fetchUserById,
     createUser,
     updateUser,
-    deleteUser,
+    deleteUser
   } = useUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);

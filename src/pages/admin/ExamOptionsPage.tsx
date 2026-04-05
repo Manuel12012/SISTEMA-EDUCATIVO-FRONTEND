@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useExamOptions} from "../../hooks/admin/useExamOptions";
 import {useNavigate, useParams} from "react-router-dom";
-import {FaArrowLeft, FaTrash, FaEdit} from "react-icons/fa";
+import {FaArrowLeft, FaEdit} from "react-icons/fa";
 
 const ExamOptionsPage = () => {
   // Usamos params leemos el id de question
@@ -14,12 +14,8 @@ const ExamOptionsPage = () => {
     examOptions,
     loading,
     error,
-    fetchExamOptions,
     fetchOptionsByQuestions,
-    createExamOption,
-    updateExamOption,
-    deleteExamOption,
-    fetchExamOptionsById,
+    deleteExamOption
   } = useExamOptions();
 
   useEffect(() => {

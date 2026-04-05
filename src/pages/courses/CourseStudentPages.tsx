@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCourses } from "../../hooks/core/useCourses";
 import { FaArrowLeft } from "react-icons/fa";
-import { enroll } from "../../services/Enrollments.service";
 import { toast } from "react-toastify";
 import { useEnrollments } from "../../hooks/teachers/useEnrollment";
 import { useUser } from "../../hooks/core/useUser";

@@ -1,4 +1,4 @@
-import {useEffect, useEffectEvent, useState} from "react";
+import {useEffect, useState} from "react";
 import {useCourses} from "../../hooks/core/useCourses";
 import type {Course} from "../../types/course";
 import {toast} from "react-toastify";
@@ -8,11 +8,11 @@ import {useAuthContext} from "../../hooks/auth/useAuthContext";
 const MyCoursesPage = () => {
   const {
     courses,
-    lessons,
+    
     loading,
     error,
     fetchCoursesByStudent,
-    fetchLessons,
+    
   } = useCourses();
 
   const {user} = useAuthContext(); // <--- obtenemos el usuario logueado
@@ -20,8 +20,6 @@ const MyCoursesPage = () => {
   const [displayedCourses, setDisplayedCourses] = useState<Course[]>([]);
 
   const [searchId, setSearchId] = useState<number | "">("");
-
-  const {fetchCourseById} = useCourses();
 
   const navigate = useNavigate();
   // Search

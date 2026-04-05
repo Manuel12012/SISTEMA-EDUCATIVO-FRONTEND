@@ -112,7 +112,7 @@ const ExamPage = () => {
               if (searchId !== "") {
                 const result = await fetchExamById(searchId);
                 if (result) {
-                  setDisplayedExams([result]);
+                  setDisplayedExams([result.exam]);
                 } else {
                   setDisplayedExams([]);
                 }

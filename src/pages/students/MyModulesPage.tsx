@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCourses } from "../../hooks/core/useCourses";
 import type { Lesson } from "../../types/lesson";
 import type { Module } from "../../types/module";
-import { FaArrowLeft, FaTrash, FaRedo, FaSearch } from "react-icons/fa";
+import { FaArrowLeft} from "react-icons/fa";
 import { useExams } from "../../hooks/admin/useExams";
 import type { Exam } from "../../types/exam";
 
@@ -20,8 +20,6 @@ const MyModulesPage = () => {
     modules,
     loading,
     error,
-    fetchModuleById,
-    fetchModules,
     fetchModulesByTitle,
     fetchModulesByCourse,
   } = useModule();

@@ -15,7 +15,6 @@ const LessonPage = () => {
     lessons,
     createLesson,
     fetchLessonsByModule,
-    fetchLessons,
     fetchLessonById,
     updateLessons,
     deleteLesson,
@@ -37,7 +36,7 @@ const LessonPage = () => {
     orden: 0,
   });
 
-  const [displayedLessons, setDisplayedLessons] = useState<Lesson[]>([]);
+  const [, setDisplayedLessons] = useState<Lesson[]>([]);
 
   useEffect(() => {
     if (lessonId) {

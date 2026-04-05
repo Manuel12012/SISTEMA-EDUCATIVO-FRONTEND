@@ -1,10 +1,8 @@
 import {NavLink} from "react-router-dom";
 import {
-  FaClipboardList,
-  FaChartBar,
+
   FaBook,
   FaHome,
-  FaUser,
 } from "react-icons/fa";
 import {useAuthContext} from "../../hooks/auth/useAuthContext";
 

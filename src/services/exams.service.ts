@@ -1,7 +1,6 @@
 import { api } from "./api";
 import type { ExamResult } from "../types/examResult";
 import type { Exam, ExamDTOCreate } from "../types/exam";
-import type { SubmitExamResponse } from "../types/submitExam";
 import type { Question } from "../types/question";
 
 export type ExamResultResponse = {
@@ -21,12 +20,17 @@ export const getExams = async (): Promise<Exam[]> => {
     return data;
 };
 
-export const getExamById = async (id: number): Promise<Exam> => {
+export const getExamById = async (id: number): Promise<ExamDetailResponse> => {
     const { data } = await api.get<ExamDetailResponse>(`/exams/${id}`);
     const { exam, questions } = data;
 
-    // añadimos questions_count directamente
-    return { ...exam, questions_count: questions.length };
+    // agregamos questions_count a exam
+    const examWithCount = { ...exam, questions_count: questions.length };
+
+    return {
+        exam: examWithCount,
+        questions: questions.map(q => ({ id: q.id, options: q.options })),
+    };
 };
 
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useCourses} from "../../hooks/core/useCourses";
-import type {Course, CourseDTOCreate} from "../../types/course";
+import type {Course} from "../../types/course";
 
 import CourseHeader from "../../components/courses/CourseHeader";
 import CourseSearch from "../../components/courses/CourseSearch";

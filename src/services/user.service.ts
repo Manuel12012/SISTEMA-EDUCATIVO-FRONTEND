@@ -1,5 +1,5 @@
 import { api } from "./api";
-import type { LoginResponse, MeResponse, User, UserDTOCreate, UserLogin, UsersResponse } from "../types/user"
+import type { LoginResponse, MeResponse, User, UserDTOCreate, UserLogin } from "../types/user"
 import type { ExamResult } from "../types/examResult";
 
 

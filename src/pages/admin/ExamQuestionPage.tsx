@@ -82,8 +82,8 @@ const ExamQuestionsPage = () => {
     if (!examId) return;
 
     // Fetch examen por id, y luego seteamos el titulo del examen
-    fetchExamById(Number(examId)).then((exam) => {
-      if (exam) setExamTitle(exam.titulo);
+    fetchExamById(Number(examId)).then((data) => {
+      if (data && data.exam) setExamTitle(data.exam.titulo);
     });
 
     // Fetch preguntas del examen
