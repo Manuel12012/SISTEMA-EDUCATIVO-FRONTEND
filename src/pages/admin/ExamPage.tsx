@@ -140,7 +140,7 @@ const ExamPage = () => {
             onChange={(e) =>
               setSearchId(e.target.value)
             }
-            className="border px-2 py-2 rounded w-32"
+            className="border px-2 py-2 rounded w-auto"
           />
         </div>
       </div>
