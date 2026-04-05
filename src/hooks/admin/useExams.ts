@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getExamById, getExams, createExam as createExamService, updateExam as updateExamService, deleteExam as deleteExamService, getExamsByCourse } from "../../services/exams.service";
+import { getExamById, getExams, createExam as createExamService, updateExam as updateExamService, deleteExam as deleteExamService, getExamsByCourse, getExamss } from "../../services/exams.service";
 import type { Exam, ExamDTOCreate } from "../../types/exam";
 
 
@@ -28,6 +28,21 @@ export const useExams = () => {
             setLoading(false);
         }
     };
+
+    const fetchExamsByTitle = async(titulo?:string) =>{
+
+        try {
+            setLoading(true);
+            setError(null);
+
+            const data = await getExamss({titulo});
+            setExams(data);
+        } catch (error) {
+            setError("Error al obtener el titulo")
+        } finally{
+            setLoading(false);
+        }
+    }
 
     const fetchExamById = async (id: number) => {
         try {
@@ -121,6 +136,7 @@ export const useExams = () => {
         createExam,
         updateExam,
         deleteExam,
-        getByCourse
+        getByCourse,
+        fetchExamsByTitle
     }
 }

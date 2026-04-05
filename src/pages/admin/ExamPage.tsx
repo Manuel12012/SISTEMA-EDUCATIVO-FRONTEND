@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useExams} from "../../hooks/admin/useExams";
 import type {Exam} from "../../types/exam";
-import {FaEdit, FaTrash, FaSearch, FaRedo} from "react-icons/fa";
+import {FaEdit, FaTrash} from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from "react-toastify";
 import {useCourses} from "../../hooks/core/useCourses";
@@ -10,22 +10,24 @@ import {useNavigate} from "react-router-dom";
 
 const ExamPage = () => {
   const navigate = useNavigate();
+
+  const inputRef = useRef<HTMLInputElement>(null);
   const {
     exams,
     loading,
     error,
     fetchExams,
-    fetchExamById,
     createExam,
     updateExam,
     deleteExam,
+    fetchExamsByTitle
   } = useExams();
 
   const {courses, fetchCourses} = useCourses();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editResultId, setEditingResultId] = useState<number | null>(null);
-  const [searchId, setSearchId] = useState<number | "">("");
+  const [searchId, setSearchId] = useState<string | "">("");
 
   const [formData, setFormData] = useState({
     course_id: 0,
@@ -55,6 +57,39 @@ const ExamPage = () => {
     setDisplayedExams(exams);
   }, [exams]);
 
+  useEffect(() => {
+
+    const time = setTimeout(() => {
+
+      // si searchId tiene un array vacio traemos los modulos por curso
+      if (searchId.trim() === "") {
+        fetchExams();
+      }
+
+      // sino traemos por el titulo
+      else {
+        fetchExamsByTitle(searchId);
+      }
+
+    }, 500)
+
+    // limpiamos el timeOut
+    return () => {
+      clearTimeout(time);
+    }
+
+    // se ejecutara cada vez que searchID cambie
+  }, [searchId])
+
+  useEffect(() => {
+    if (inputRef.current && document.activeElement !== inputRef.current) {
+      inputRef.current.focus();
+
+      const length = inputRef.current.value.length;
+      inputRef.current.setSelectionRange(length, length);
+    }
+  }, [exams]);
+  
   if (loading)
     return (
       <div className="flex justify-center items-center h-[60vh]">
@@ -98,41 +133,15 @@ const ExamPage = () => {
 
         <div className="flex gap-2 items-center">
           <input
-            type="number"
-            placeholder="Buscar por ID"
+            type="text"
+            placeholder="Buscar Examen"
             value={searchId}
+            ref={inputRef}
             onChange={(e) =>
-              setSearchId(e.target.value === "" ? "" : Number(e.target.value))
+              setSearchId(e.target.value)
             }
             className="border px-2 py-2 rounded w-32"
           />
-          <button
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            onClick={async () => {
-              if (searchId !== "") {
-                const result = await fetchExamById(searchId);
-                if (result) {
-                  setDisplayedExams([result.exam]);
-                } else {
-                  setDisplayedExams([]);
-                }
-              } else {
-                setDisplayedExams(exams);
-              }
-            }}
-          >
-            <FaSearch />
-          </button>
-
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-            onClick={() => {
-              setSearchId("");
-              fetchExams();
-            }}
-          >
-            <FaRedo />
-          </button>
         </div>
       </div>
 
