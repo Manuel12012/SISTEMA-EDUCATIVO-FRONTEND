@@ -15,18 +15,21 @@ import StudentLayout from "../layouts/student/StudentLayout";
 import MyModulesPage from "../pages/students/MyModulesPage";
 import CourseStudentsPage from "../pages/courses/CourseStudentPages";
 import CourseExamsPage from "../pages/courses/CourseExamPage";
-import CourseDetailPage from "../pages/courses/CourseDetailPage"; // 🔥 NUEVO
+import CourseDetailPage from "../pages/courses/CourseDetailPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
+      {/* 🔹 Redirigir "/" a "/login" */}
+      <Route path="/" element={<Navigate to="/login" />} />
+
+      {/* Ruta login */}
       <Route path="/login" element={<LoginPage />} />
 
+      {/* Rutas admin */}
       <Route element={<MainLayout />}>
         <Route path="/admin/results" element={<ResultsPage />} />
         <Route path="/admin/exams" element={<ExamPage />} />
-
-        {/* LISTA DE CURSOS */}
         <Route
           path="/admin/courses"
           element={
@@ -35,49 +38,22 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
-        {/* 🔥 NUEVA ESTRUCTURA CON TABS */}
-        <Route
-          path="/admin/courses/:courseId"
-          element={<CourseDetailPage />}
-        >
+        <Route path="/admin/courses/:courseId" element={<CourseDetailPage />}>
           <Route index element={<Navigate to="modules" />} />
           <Route path="modules" element={<ModulePage />} />
           <Route path="students" element={<CourseStudentsPage />} />
           <Route path="exams" element={<CourseExamsPage />} />
         </Route>
-
-        {/* 🔒 TUS RUTAS ANTIGUAS (NO SE BORRAN) */}
-        <Route
-          path="/admin/courses/:courseId/students"
-          element={<CourseStudentsPage />}
-        />
-
-        <Route
-          path="/admin/courses/:courseId/modules"
-          element={<ModulePage />}
-        />
-
-        {/* ❗ INCONSISTENTE PERO LO DEJAMOS */}
-        <Route
-          path="/courses/:id/exams"
-          element={<CourseExamsPage />}
-        />
-
         <Route path="/admin/users" element={<UsersPage />} />
         <Route path="/exams/:id/take" element={<TakeExamPage />} />
-
-        <Route
-          path="/admin/exams/:examId/questions"
-          element={<ExamQuestionPage />}
-        />
-
+        <Route path="/admin/exams/:examId/questions" element={<ExamQuestionPage />} />
         <Route
           path="/admin/courses/:courseId/modules/:moduleId/lessons/:lessonId"
           element={<LessonPage />}
         />
       </Route>
 
+      {/* Rutas estudiante */}
       <Route element={<StudentLayout />}>
         <Route path="/student/myCourses" element={<MyCoursesPage />} />
         <Route
