@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'key.pem')),       // raíz
-      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')) // raíz
+      key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')), // clave correcta
+      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),     // certificado correcto
     },
     port: 3000
   }
