@@ -3,6 +3,7 @@ export interface Question {
     exam_id:number;
     pregunta: string;
     option_count: number;
+    points: number;
 }
 
 export interface QuestionDTOCreate {
