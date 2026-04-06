@@ -174,7 +174,7 @@ const ExamPage = () => {
                     <td className="px-6 py-4 font-medium">{exam.id}</td>
 
                     <td className="px-6 py-4">
-                      <div className="rounded-xl text-white w-fit px-2 py-1"
+                      <div className="rounded-full text-white w-fit px-2 py-1"
                       style={{backgroundColor :exam.course_color}}>
                         {exam.course_titulo}
                       </div>

@@ -13,6 +13,6 @@ export interface Exam {
 export interface ExamDTOCreate{
     course_id:number,
     titulo: string,
-    duracion_minutos: number
+    duracion_minutos: number,
 }
 

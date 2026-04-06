@@ -12,6 +12,15 @@ const GRADOS = [
   {value: "primaria", label: "Primaria"},
   {value: "secundaria", label: "Secundaria"},
 ];
+
+const colors = [
+  {value: "#3B82F6", label: "azul"},
+  {value: "#22C55E", label: "verde"},
+  {value: "#EF4444", label: "rojo"},
+  {value: "#F59E0B", label: "amarillo"},
+  {value: "#8B5CF6", label: "morado"}
+];
+
 const CourseModal = ({closeModal, editingCourse}: Props) => {
   const {createCourse, updateCourse, uploadImageHandler} = useCourses();
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -21,6 +30,7 @@ const CourseModal = ({closeModal, editingCourse}: Props) => {
     descripcion: "",
     grado: "primaria",
     imagen_url: "",
+    color: "",
   });
 
   useEffect(() => {
@@ -30,6 +40,7 @@ const CourseModal = ({closeModal, editingCourse}: Props) => {
         descripcion: editingCourse.descripcion || "",
         grado: editingCourse.grado || "primaria",
         imagen_url: editingCourse.imagen_url || "",
+        color: editingCourse.color || "",
       });
 
       if (editingCourse.imagen_url) {
@@ -148,7 +159,29 @@ const CourseModal = ({closeModal, editingCourse}: Props) => {
               />
             )}
           </div>
+
+          <div>
+            <label>Selecciona el color</label>
+
+            <select
+            value={formData.color}
+            onChange={(e)=>
+              setFormData({
+                ...formData,
+                color: e.target.value as CourseDTOCreate["color"],
+              })
+            }
+            className="border px-3 py-2 rounded w-full">
+              {colors.map((c)=>(
+            <option key={c.value} value={c.value}>
+              {c.label}
+            </option>
+              ))}
+
+            </select>
+          </div>
         </div>
+
 
         <div className="flex justify-end mt-6 gap-3">
           <button
