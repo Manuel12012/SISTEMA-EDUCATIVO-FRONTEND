@@ -35,7 +35,6 @@ const ExamPage = () => {
     duracion_minutos: 0,
   });
 
-  const [displayedExams, setDisplayedExams] = useState<Exam[]>([]);
   const handleEditClick = (exam: Exam) => {
     setEditingResultId(exam.id);
     setFormData({
@@ -51,11 +50,6 @@ const ExamPage = () => {
     fetchExams();
     fetchCourses();
   }, []);
-
-  // actualizamos los examenes segun cambie el examen
-  useEffect(() => {
-    setDisplayedExams(exams);
-  }, [exams]);
 
   useEffect(() => {
 
@@ -161,14 +155,14 @@ const ExamPage = () => {
             </thead>
 
             <tbody className="divide-y">
-              {displayedExams.length === 0 && (
+              {exams.length === 0 && (
                 <tr>
                   <td colSpan={5} className="text-center py-8 text-gray-400">
                     No hay examenes registrados
                   </td>
                 </tr>
               )}
-              {displayedExams.map((exam) => {
+              {exams.map((exam) => {
                 return (
                   <tr key={exam.id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 font-medium">{exam.id}</td>
