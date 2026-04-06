@@ -74,6 +74,7 @@ const ExamPage = () => {
 
     // se ejecutara cada vez que searchID cambie
   }, [searchId])
+  console.log(exams);
 
   useEffect(() => {
     if (inputRef.current && document.activeElement !== inputRef.current) {
