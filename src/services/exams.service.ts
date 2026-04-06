@@ -20,15 +20,12 @@ export const getExams = async (): Promise<Exam[]> => {
     return data;
 };
 
-export const getExamss = async(params?:{
-        titulo?: string;
-}
-)=>{
-    const {data} = await api.get("exams",{
+export const getExamss = async (params?: { titulo?: string }): Promise<Exam[]> => {
+    const { data } = await api.get<Exam[]>("/exams", {
         params,
     });
     return data;
-}
+};
 
 export const getExamById = async (id: number): Promise<ExamDetailResponse> => {
     const { data } = await api.get<ExamDetailResponse>(`/exams/${id}`);
