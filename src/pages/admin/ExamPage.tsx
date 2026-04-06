@@ -55,7 +55,8 @@ const ExamPage = () => {
   // actualizamos los examenes segun cambie el examen
   useEffect(() => {
     setDisplayedExams(exams);
-  }, [exams]);
+    fetchCourses();
+  }, [exams, courses]);
 
   useEffect(() => {
 
