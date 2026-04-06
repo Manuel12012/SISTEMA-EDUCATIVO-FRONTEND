@@ -6,6 +6,7 @@ export interface Exam {
   titulo: string;
   duracion_minutos: number;
   questions_count: number;
+  course_color: string;
 }
 
 
