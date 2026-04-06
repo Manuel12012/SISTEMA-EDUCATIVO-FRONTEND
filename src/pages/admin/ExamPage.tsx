@@ -58,6 +58,7 @@ const ExamPage = () => {
     fetchCourses();
   }, [exams, courses]);
 
+  console.log(courses);
   useEffect(() => {
 
     const time = setTimeout(() => {
