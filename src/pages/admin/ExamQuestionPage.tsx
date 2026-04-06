@@ -23,7 +23,6 @@ const ExamQuestionsPage = () => {
     questions,
     loading,
     error,
-    fetchQuestions,
     createQuestion,
     updateQuestion,
     deleteQuestion,
@@ -239,7 +238,7 @@ const ExamQuestionsPage = () => {
             onClick={() => {
               // Seteamos el setSearchId en vacio y llamamos FetchQuestions() para mostrar todas las preguntas
               setSearchId("");
-              fetchQuestions();
+              fetchQuestionsByExam(Number(examId));
             }}
           >
             <FaRedo />
