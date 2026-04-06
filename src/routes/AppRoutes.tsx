@@ -60,6 +60,7 @@ export default function AppRoutes() {
           path="/student/myCourses/:courseId/myModules"
           element={<MyModulesPage />}
         />
+        <Route path="/student/myModules/:moduleId/myLessons"></Route>
       </Route>
     </Routes>
   );
