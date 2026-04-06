@@ -55,10 +55,8 @@ const ExamPage = () => {
   // actualizamos los examenes segun cambie el examen
   useEffect(() => {
     setDisplayedExams(exams);
-    fetchCourses();
-  }, [exams, courses]);
+  }, [exams]);
 
-  console.log(courses);
   useEffect(() => {
 
     const time = setTimeout(() => {
