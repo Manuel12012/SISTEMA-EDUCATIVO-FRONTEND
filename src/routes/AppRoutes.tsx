@@ -16,6 +16,7 @@ import MyModulesPage from "../pages/students/MyModulesPage";
 import CourseStudentsPage from "../pages/courses/CourseStudentPages";
 import CourseExamsPage from "../pages/courses/CourseExamPage";
 import CourseDetailPage from "../pages/courses/CourseDetailPage";
+import MyLessonPage from "../pages/students/MyLessonPage";
 
 export default function AppRoutes() {
   return (
@@ -60,6 +61,7 @@ export default function AppRoutes() {
           path="/student/myCourses/:courseId/myModules"
           element={<MyModulesPage />}
         />
+        <Route path="/student/myModules/:moduleId/myLessons" element={<MyLessonPage/>}></Route>
       </Route>
     </Routes>
   );

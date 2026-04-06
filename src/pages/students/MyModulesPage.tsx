@@ -239,7 +239,7 @@ const MyModulesPage = () => {
                           className="bg-blue-400 px-2 py-1 text-white rounded"
                           onClick={() =>
                             navigate(
-                              `/admin/courses/${courseId}/modules/${m.id}/lessons/${opt.id}`,
+                              `/students/myModules/${m.id}/myLessons`,
                             )
                           }
                         >

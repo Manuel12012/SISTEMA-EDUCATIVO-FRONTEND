@@ -70,7 +70,6 @@ export const useQuestions = () => {
             setError(null);
 
             const response = await createQuestionService(question);
-            await fetchQuestions();
             return response;
         } catch (error) {
             setError("Error al crear la pregunta");
@@ -86,7 +85,6 @@ export const useQuestions = () => {
             setError(null);
 
             const response = await updateQuestionService(id, question);
-            await fetchQuestions()
             return response;
         } catch (error) {
             setError("Error al actualizar la pregunta");
@@ -102,7 +100,6 @@ export const useQuestions = () => {
             setError(null);
 
             const response = await deleteQuestionService(id);
-            await fetchQuestions();
             return response;
         } catch (error) {
             setError("Error al eliminar la pregunta");

@@ -23,7 +23,6 @@ const ExamQuestionsPage = () => {
     questions,
     loading,
     error,
-    fetchQuestions,
     createQuestion,
     updateQuestion,
     deleteQuestion,
@@ -151,6 +150,7 @@ const ExamQuestionsPage = () => {
                 return updateQuestion(q.id, {
                   exam_id: examIdNumber,
                   pregunta: q.pregunta,
+                  points: q.points,
                 });
               });
 
@@ -164,7 +164,7 @@ const ExamQuestionsPage = () => {
                     updateExamOption(opt.id, {
                       question_id: opt.question_id,
                       opcion: opt.opcion,
-                      es_correcta: opt.es_correcta,     
+                      es_correcta: opt.es_correcta,
                     }),
                   ),
               );
@@ -238,7 +238,7 @@ const ExamQuestionsPage = () => {
             onClick={() => {
               // Seteamos el setSearchId en vacio y llamamos FetchQuestions() para mostrar todas las preguntas
               setSearchId("");
-              fetchQuestions();
+              fetchQuestionsByExam(Number(examId));
             }}
           >
             <FaRedo />
@@ -475,7 +475,20 @@ const ExamQuestionsPage = () => {
               <div className="">
                 <label className="">Puntos</label>
                 <div className="flex gap-5">
-                  <input type="text" placeholder="Puntos" />
+                  <input
+                    type="number"
+                    value={q.points}
+                    onChange={(e) =>
+                      setDisplayedQuestions((prev) =>
+                        prev.map((item) =>
+                          item.id === q.id
+                            ? {...item, points: Number(e.target.value)}
+                            : item,
+                        ),
+                      )
+                    }
+                    className="border rounded px-2 py-1 w-full"
+                  />
                   <p>Ptos</p>
                 </div>
               </div>
