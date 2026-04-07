@@ -73,6 +73,7 @@ const ExamQuestionsPage = () => {
   // crear question DATA
   const [formData, setFormData] = useState({
     pregunta: "",
+    puntos: 0
   });
 
   // Traemos los examenes
@@ -89,10 +90,9 @@ const ExamQuestionsPage = () => {
     fetchQuestionsByExam(Number(examId));
   }, [examId]);
 
-  // Use effect para buscar por id
   useEffect(() => {
-    // Mostramos todas las questions que vienen del hook
-    setDisplayedQuestions(questions);
+    // Si questions no es array, setear array vacío
+    setDisplayedQuestions(Array.isArray(questions) ? questions : []);
   }, [questions]);
 
   if (loading)
@@ -150,7 +150,7 @@ const ExamQuestionsPage = () => {
                 return updateQuestion(q.id, {
                   exam_id: examIdNumber,
                   pregunta: q.pregunta,
-                  points: q.points,
+                  points: q.points
                 });
               });
 
@@ -185,6 +185,7 @@ const ExamQuestionsPage = () => {
           Guardar cambios
         </button>
       </div>
+      
       <div className="flex justify-between items-center mb-4">
         <button
           className="rounded bg-green-400 px-4 py-2 text-white hover:bg-green-500"
@@ -193,6 +194,7 @@ const ExamQuestionsPage = () => {
             setEditingResultId(null);
             setFormData({
               pregunta: "",
+              puntos: 0
             });
 
             // Abrimos modal
@@ -533,11 +535,28 @@ const ExamQuestionsPage = () => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      pregunta: String(e.target.value),
+                      pregunta: String(e.target.value)
                     })
                   }
                   className="border px-3 py-2 rounded w-full"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Puntos
+                </label>
+
+                <input
+                 type="number"
+                 value={formData.puntos}
+                 onChange={(e)=>
+                  setFormData({
+                    ...formData,
+                    puntos: Number(e.target.value)
+                  })
+                 }
+                 className="border px-3 py-2 rounded w-full" />
               </div>
 
               <div className="flex justify-end mt-6 gap-3">
@@ -564,6 +583,7 @@ const ExamQuestionsPage = () => {
                         await createQuestion({
                           exam_id: Number(examId), // <-- aquí usamos el ID del examen
                           pregunta: formData.pregunta,
+                          points: formData.puntos
                         });
                         toast.success("Pregunta creada correctamente");
                       }

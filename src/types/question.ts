@@ -8,5 +8,6 @@ export interface Question {
 
 export interface QuestionDTOCreate {
   exam_id: number;           // obligatorio
-  pregunta: string;          // obligatorio
+  pregunta: string;   
+  points: number       // obligatorio
 }
