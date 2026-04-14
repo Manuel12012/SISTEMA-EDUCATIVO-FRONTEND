@@ -46,7 +46,6 @@ export default function AppRoutes() {
           <Route path="exams" element={<CourseExamsPage />} />
         </Route>
         <Route path="/admin/users" element={<UsersPage />} />
-        <Route path="/exams/:id/take" element={<TakeExamPage />} />
         <Route path="/admin/exams/:examId/questions" element={<ExamQuestionPage />} />
         <Route
           path="/admin/courses/:courseId/modules/:moduleId/lessons/:lessonId"
@@ -61,7 +60,9 @@ export default function AppRoutes() {
           path="/student/myCourses/:courseId/myModules"
           element={<MyModulesPage />}
         />
-        <Route path="/student/myModules/:moduleId/myLessons" element={<MyLessonPage/>}></Route>
+                <Route path="/exams/:id/take" element={<TakeExamPage />} />
+
+        <Route path="/student/myModules/:moduleId/myLessons/:lessonId" element={<MyLessonPage />}></Route>
       </Route>
     </Routes>
   );

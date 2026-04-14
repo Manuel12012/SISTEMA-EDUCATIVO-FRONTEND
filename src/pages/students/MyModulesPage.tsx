@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCourses } from "../../hooks/core/useCourses";
 import type { Lesson } from "../../types/lesson";
 import type { Module } from "../../types/module";
-import { FaArrowLeft} from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { useExams } from "../../hooks/admin/useExams";
 import type { Exam } from "../../types/exam";
 
@@ -24,7 +24,7 @@ const MyModulesPage = () => {
     fetchModulesByCourse,
   } = useModule();
 
-  const { exams, getByCourse } = useExams();
+  const { exam, exams, getByCourse } = useExams();
 
   const [leccionesVisibles, setLeccionesVisibles] = useState<Set<number>>(
     new Set(),
@@ -105,6 +105,8 @@ const MyModulesPage = () => {
       inputRef.current.setSelectionRange(length, length);
     }
   }, [modules]);
+
+  console.log(displayedExams);
   // manejo de errores
   if (error)
     return (
@@ -165,9 +167,9 @@ const MyModulesPage = () => {
 
       <div className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold">Modulos del curso</h2>
-            {displayedModules.length===0 &&(
-              <div>No hay resultados</div>
-            )}
+        {displayedModules.length === 0 && (
+          <div>No hay resultados</div>
+        )}
         {displayedModules.map((m) => (
           <div key={m.id} className="flex justify-between gap-5 w-full">
             <div className="flex flex-col bg-gray-200 p-4 gap-3 rounded text-md w-full">
@@ -239,7 +241,7 @@ const MyModulesPage = () => {
                           className="bg-blue-400 px-2 py-1 text-white rounded"
                           onClick={() =>
                             navigate(
-                              `/students/myModules/${m.id}/myLessons`,
+                              `/student/myModules/${m.id}/myLessons/${opt.id}`,
                             )
                           }
                         >
@@ -275,17 +277,30 @@ const MyModulesPage = () => {
               </div>
 
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                onClick={() => {
-                  navigate(`/exams/${e.id}/take`);
-                }}
+                onClick={() => navigate(`/exams/${e.id}/take`)}
+                disabled={e.ya_rendido}
+                className={`
+    flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition
+    ${e.ya_rendido
+                    ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                    : "bg-green-500 text-white hover:bg-green-600 active:scale-95"}
+  `}
               >
-                Tomar examen
+                {e.ya_rendido ? (
+                  <>
+                    Examen completado
+                  </>
+                ) : (
+                  <>
+                    Rendir examen
+                  </>
+                )}
               </button>
             </div>
           ))}
         </div>
       </div>
+
     </div>
   );
 };

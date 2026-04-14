@@ -36,18 +36,31 @@ export const useUser = () => {
           setLoading(true);
           setError(null);
       
-          const data = await getUsers({ role: "estudiante" });
+          const data = await getUsers({ rol: "estudiante" });
       
-          console.log("DATA USERS:", data); // 🔥 DEBUG
           setStudents(data);
       
         } catch (error) {
-          console.error("ERROR USERS:", error); // 🔥
           setError("Error al obtener estudiantes");
         } finally {
           setLoading(false);
         }
       };
+
+      const fetchUsersByName = async(nombre?:string)=>{
+        try {
+            setLoading(true);
+            setError(null);
+     
+            const data = await getUsers({ nombre });
+            setUsers(data);
+     
+        } catch (error) {
+            setError("Error al obtener usuarios");
+        } finally{
+            setLoading(false);
+        }
+     }
 
     const fetchUserById = async (id: number) => {
         try {
@@ -145,7 +158,8 @@ export const useUser = () => {
         deleteUser,
         fetchResultsByUser,
         fetchStudents,
-        students
+        students,
+        fetchUsersByName
     }
 
 }

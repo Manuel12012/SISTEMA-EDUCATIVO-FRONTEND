@@ -3,12 +3,15 @@ import { submitExam, takeExam } from "../../services/exams.service";
 import { useParams } from "react-router-dom";
 
 const TakeExamPage = () => {
+  // estados para el examen
   const [exam, setExam] = useState<any>(null);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [timeLeft, setTimeLeft] = useState<number>(0);
 
+  // tomamos el id del examen
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -16,6 +19,14 @@ const TakeExamPage = () => {
       try {
         const data = await takeExam(Number(id));
         setExam(data);
+
+        const expiresAt = new Date(data.expires_at).getTime();
+        const now = Date.now();
+        
+        const segundosRestantes = Math.floor((expiresAt - now) / 1000);
+        
+        setTimeLeft(segundosRestantes > 0 ? segundosRestantes : 0);
+
       } catch (error) {
         console.error(error);
       } finally {
@@ -25,6 +36,29 @@ const TakeExamPage = () => {
 
     fetchExam();
   }, [id]);
+
+  // cuenta hacia atras
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleSubmit();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
 
   const handleSelect = (questionId: number, optionId: number) => {
     setAnswers((prev) => ({
@@ -64,6 +98,7 @@ const TakeExamPage = () => {
 
   if (result) {
     return (
+
       <div className="max-w-xl mx-auto mt-10 bg-white  shadow-xl rounded-2xl p-6 text-center">
         <h2 className="text-2xl font-bold mb-4">Resultado</h2>
 
@@ -76,13 +111,6 @@ const TakeExamPage = () => {
         <p className="mb-4">
           Puntos ganados: {result.puntos_ganados}
         </p>
-
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
-        >
-          Intentar nuevamente
-        </button>
       </div>
     );
   }
@@ -93,10 +121,16 @@ const TakeExamPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      
+
       {/* HEADER */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold">{exam.exam.titulo}</h1>
+        <div className="flex justify-between items-center">
+
+          <div className="bg-red-100 text-red-600 font-bold px-4 py-2 rounded-lg">
+            ⏱ {formatTime(timeLeft)}
+          </div>
+        </div>
 
         {/* Progress bar */}
         <div className="mt-4">
@@ -128,11 +162,10 @@ const TakeExamPage = () => {
                 <label
                   key={opt.id}
                   className={`flex items-center gap-2 p-3 rounded-lg border cursor-pointer transition 
-                  ${
-                    answers[q.id] === opt.id
+                  ${answers[q.id] === opt.id
                       ? "bg-blue-100 border-blue-500"
                       : "hover:bg-gray-100"
-                  }`}
+                    }`}
                 >
                   <input
                     type="radio"

@@ -12,11 +12,14 @@ const CourseCard = ({course, onEdit, onDelete}: Props) => {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col"
-    onClick={()=>navigate(`/admin/courses/${course.id}`)}>
-      <img
-        src={`http://localhost:8000${course.imagen_url}`}
-        className="w-full h-40 object-cover"
-      />
+><img
+  src={
+    course.imagen_url
+      ? `http://localhost:8000${course.imagen_url}`
+      : "https://placehold.co/600x400"
+  }
+  className="w-full h-40 object-cover"
+/>
 
       <div className="p-4 flex flex-col gap-3 flex-1">
         <h3 className="font-semibold text-gray-800">{course.titulo}</h3>

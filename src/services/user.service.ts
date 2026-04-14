@@ -46,12 +46,13 @@ export const loginUser = async (
 };
 
 export const getUsers = async (params?: {
-    role?: string;
+    rol?: string;
     page?: number;
     limit?: number;
+    nombre?: string;
   }) => {
     const { data } = await api.get("/users", {
-      params, // 🔥 axios arma el query string automáticamente
+      params, // axios arma el query string automáticamente
     });
     return data;
   };

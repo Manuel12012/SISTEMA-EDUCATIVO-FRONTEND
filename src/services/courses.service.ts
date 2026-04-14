@@ -52,11 +52,7 @@ export const uploadCourseImage = async (file: File): Promise<{ imageUrl: string 
   const formData = new FormData();
   formData.append("image", file);
 
-  const { data } = await api.post("/course/upload", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await api.post("/courses/upload", formData);
 
   return data;
 };

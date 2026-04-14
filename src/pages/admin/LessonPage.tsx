@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
-import {useCourses} from "../../hooks/core/useCourses";
-import {useNavigate, useParams} from "react-router-dom";
-import type {Lesson, LessonDTOCreate, LessonType} from "../../types/lesson";
-import {toast} from "react-toastify";
+import { useEffect, useState } from "react";
+import { useCourses } from "../../hooks/core/useCourses";
+import { useNavigate, useParams } from "react-router-dom";
+import type { Lesson, LessonDTOCreate, LessonType } from "../../types/lesson";
+import { toast } from "react-toastify";
 
 const LessonPage = () => {
-  const {moduleId} = useParams();
+  const { moduleId } = useParams();
 
   const navigate = useNavigate();
   const {
@@ -20,7 +20,7 @@ const LessonPage = () => {
     deleteLesson,
   } = useCourses();
 
-  const {lessonId} = useParams();
+  const { lessonId } = useParams();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -161,173 +161,173 @@ const LessonPage = () => {
       <div className="flex flex-col gap-4">
         {lessonId
           ? lesson && (
-              <div className="w-full">
-                <div className="bg-gray-200 p-8 rounded space-y-4">
-                  <div>
-                    <p className="text-sm text-gray-500">ID</p>
-                    <p className="font-semibold">{lesson.id}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-gray-500">Título</p>
-                    <p className="font-semibold">{lesson.titulo}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-gray-500">Tipo</p>
-                    <p className="font-semibold">{lesson.tipo}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-gray-500">Orden</p>
-                    <p className="font-semibold">{lesson.orden}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-gray-500">Contenido</p>
-                    <div className="bg-white p-4 rounded border">
-                      {lesson.contenido}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          : lessons.map((l) => (
-              <div
-                key={l.id}
-                className="bg-white rounded-lg shadow-sm border p-4 flex justify-between items-center"
-              >
+            <div className="w-full">
+              <div className="bg-gray-200 p-8 rounded space-y-4">
                 <div>
-                  <p className="font-semibold">{l.titulo}</p>
-                  <p className="text-sm text-gray-500">Tipo: {l.tipo}</p>
-                  <p className="text-sm text-gray-500">Orden: {l.orden}</p>
+                  <p className="text-sm text-gray-500">ID</p>
+                  <p className="font-semibold">{lesson.id}</p>
                 </div>
 
-                <div className="flex gap-2">
-                  <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
-                    onClick={() => handleEditclick(l)}
-                  >
-                    Editar
-                  </button>
+                <div>
+                  <p className="text-sm text-gray-500">Título</p>
+                  <p className="font-semibold">{lesson.titulo}</p>
+                </div>
 
-                  <button
-                    className="bg-red-400 text-white px-3 py-1 rounded text-sm hover:bg-red-500"
-                    onClick={async () => {
-                      try {
-                        await deleteLesson(l.id);
-                        toast.success("Lección eliminada correctamente");
-                        fetchLessonsByModule(Number(moduleId));
-                      } catch (error) {
-                        toast.error("Error al eliminar la lección");
-                      }
-                    }}
-                  >
-                    Borrar
-                  </button>
+                <div>
+                  <p className="text-sm text-gray-500">Tipo</p>
+                  <p className="font-semibold">{lesson.tipo}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500">Orden</p>
+                  <p className="font-semibold">{lesson.orden}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500">Contenido</p>
+                  <div className="bg-white p-4 rounded border">
+                    {lesson.contenido}
+                  </div>
                 </div>
               </div>
-            ))}
-            {isModalOpen && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-xl shadow-lg p-6 w-96 relative">
-      <h2 className="text-xl font-bold mb-4">
-        {editResultId !== null ? "Editar Lección" : "Crear Lección"}
-      </h2>
+            </div>
+          )
+          : lessons.map((l) => (
+            <div
+              key={l.id}
+              className="bg-white rounded-lg shadow-sm border p-4 flex justify-between items-center"
+            >
+              <div>
+                <p className="font-semibold">{l.titulo}</p>
+                <p className="text-sm text-gray-500">Tipo: {l.tipo}</p>
+                <p className="text-sm text-gray-500">Orden: {l.orden}</p>
+              </div>
 
-      <div className="space-y-3">
+              <div className="flex gap-2">
+                <button
+                  className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                  onClick={() => handleEditclick(l)}
+                >
+                  Editar
+                </button>
 
-        <div>
-          <label className="block text-sm font-medium">Título</label>
-          <input
-            type="text"
-            value={formData.titulo}
-            onChange={(e) =>
-              setFormData({ ...formData, titulo: e.target.value })
-            }
-            className="border px-3 py-2 rounded w-full"
-          />
-        </div>
+                <button
+                  className="bg-red-400 text-white px-3 py-1 rounded text-sm hover:bg-red-500"
+                  onClick={async () => {
+                    try {
+                      await deleteLesson(l.id);
+                      toast.success("Lección eliminada correctamente");
+                      fetchLessonsByModule(Number(moduleId));
+                    } catch (error) {
+                      toast.error("Error al eliminar la lección");
+                    }
+                  }}
+                >
+                  Borrar
+                </button>
+              </div>
+            </div>
+          ))}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl shadow-lg p-6 w-96 relative">
+              <h2 className="text-xl font-bold mb-4">
+                {editResultId !== null ? "Editar Lección" : "Crear Lección"}
+              </h2>
 
-        <div>
-          <label className="block text-sm font-medium">Tipo</label>
-          <select
-            value={formData.tipo}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                tipo: e.target.value as LessonType,
-              })
-            }
-            className="border px-3 py-2 rounded w-full"
-          >
-            <option value="texto">Texto</option>
-            <option value="video">Video</option>
-          </select>
-        </div>
+              <div className="space-y-3">
 
-        <div>
-          <label className="block text-sm font-medium">Contenido</label>
-          <textarea
-            value={formData.contenido}
-            onChange={(e) =>
-              setFormData({ ...formData, contenido: e.target.value })
-            }
-            className="border px-3 py-2 rounded w-full"
-          />
-        </div>
+                <div>
+                  <label className="block text-sm font-medium">Título</label>
+                  <input
+                    type="text"
+                    value={formData.titulo}
+                    onChange={(e) =>
+                      setFormData({ ...formData, titulo: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
+                </div>
 
-        <div>
-          <label className="block text-sm font-medium">Orden</label>
-          <input
-            type="number"
-            value={formData.orden}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                orden: Number(e.target.value),
-              })
-            }
-            className="border px-3 py-2 rounded w-full"
-          />
-        </div>
+                <div>
+                  <label className="block text-sm font-medium">Tipo</label>
+                  <select
+                    value={formData.tipo}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        tipo: e.target.value as LessonType,
+                      })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  >
+                    <option value="texto">Texto</option>
+                    <option value="video">Video</option>
+                  </select>
+                </div>
 
-      </div>
+                <div>
+                  <label className="block text-sm font-medium">Contenido</label>
+                  <textarea
+                    value={formData.contenido}
+                    onChange={(e) =>
+                      setFormData({ ...formData, contenido: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
+                </div>
 
-      <div className="flex justify-end mt-6 gap-3">
-        <button
-          className="bg-gray-300 px-4 py-2 rounded"
-          onClick={() => setIsModalOpen(false)}
-        >
-          Cancelar
-        </button>
+                <div>
+                  <label className="block text-sm font-medium">Orden</label>
+                  <input
+                    type="number"
+                    value={formData.orden}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        orden: Number(e.target.value),
+                      })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
+                </div>
 
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          onClick={async () => {
-            try {
-              if (editResultId !== null) {
-                await updateLessons(editResultId, formData);
-                toast.success("Lección actualizada correctamente");
-              } else {
-                await createLesson(formData);
-                toast.success("Lección creada correctamente");
-              }
+              </div>
 
-              setIsModalOpen(false);
-              setEditingResultId(null);
-              fetchLessonsByModule(Number(moduleId));
-            } catch (error) {
-              toast.error("Error al guardar la lección");
-            }
-          }}
-        >
-          Guardar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+              <div className="flex justify-end mt-6 gap-3">
+                <button
+                  className="bg-gray-300 px-4 py-2 rounded"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                  onClick={async () => {
+                    try {
+                      if (editResultId !== null) {
+                        await updateLessons(editResultId, formData);
+                        toast.success("Lección actualizada correctamente");
+                      } else {
+                        await createLesson(formData);
+                        toast.success("Lección creada correctamente");
+                      }
+
+                      setIsModalOpen(false);
+                      setEditingResultId(null);
+                      fetchLessonsByModule(Number(moduleId));
+                    } catch (error) {
+                      toast.error("Error al guardar la lección");
+                    }
+                  }}
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

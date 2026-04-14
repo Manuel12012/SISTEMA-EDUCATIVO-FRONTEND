@@ -7,6 +7,7 @@ export interface Exam {
   duracion_minutos: number;
   questions_count: number;
   course_color: string;
+  ya_rendido: boolean
 }
 
 
