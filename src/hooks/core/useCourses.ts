@@ -5,7 +5,8 @@ import {
     , updateCourse as updateCourseService
     , deleteCourse as deleteCourseService
     , uploadCourseImage,
-    getStudentsByCourse
+    getStudentsByCourse,
+    getCoursess
 } from "../../services/courses.service";
 import type { Module } from "../../types/module";
 import type { Lesson, LessonDTOCreate } from "../../types/lesson";
@@ -52,12 +53,29 @@ export const useCourses = () => {
 
             setCourses(data);
 
-            return data; // 👈 FALTABA ESTO
+            return data;
 
         } catch (error) {
             setError("Error al obtener los cursos")
             throw error;
 
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const fetchCoursesByName = async (titulo?: string) => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const data = await getCoursess({ titulo });
+
+            setCourses(data);
+
+            return data;
+        } catch (error) {
+            setError("Error al obtener el curso por titulo");
         } finally {
             setLoading(false);
         }
@@ -162,7 +180,7 @@ export const useCourses = () => {
         }
     }
 
-    const fetchStudentsByCourse = async(id:number) =>{
+    const fetchStudentsByCourse = async (id: number) => {
         try {
             setLoading(true);
             setError(null);
@@ -173,7 +191,7 @@ export const useCourses = () => {
         } catch (error) {
             setError("Error al obtener los alumnos");
             throw error;
-        } finally{
+        } finally {
             setLoading(false);
         }
     }
@@ -403,6 +421,7 @@ export const useCourses = () => {
         uploadImageHandler,
         fetchCoursesByStudent,
         fetchStudentsByCourse,
+        fetchCoursesByName,
         // modules
         fetchModules,
         fetchModuleById,

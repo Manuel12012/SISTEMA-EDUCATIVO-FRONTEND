@@ -13,8 +13,9 @@ const CourseGrid = ({displayedCourses,onEdit,onDelete}:Props) => {
 
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
    >
-      
-      {displayedCourses.map(course => (
+{displayedCourses.length === 0  && (
+  <p>No se encontraron cursos</p>
+)}      {displayedCourses.map(course => (
 
         <CourseCard
           key={course.id}

@@ -11,6 +11,18 @@ export const getCourses = async (): Promise<Course[]> => {
   return data;
   
 };
+
+export const getCoursess = async (params :{
+  titulo?: string
+}): Promise<Course[]> => {
+  // extraemos solo data, await porque esperamos primjero a la base de datos ("/courses supongo que viene de las rutas de mi backend")
+  const { data } = await api.get<Course[]>("/courses/index",{
+    params
+  });
+  // solo retornamos data
+  return data;
+  
+};
 // Creamos una funcion para obtener el curso por el ID tipo GET  (id: number) con esto le decimos que el id sera de tipo number
 export const getCourseById = async (id: number): Promise<Course> => {
   // extraemos data. y usamos la ruta /courses/id
