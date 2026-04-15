@@ -1,142 +1,123 @@
-import { useState } from "react";
-import { getExamById, getExams, createExam as createExamService, updateExam as updateExamService, deleteExam as deleteExamService, getExamsByCourse, getExamss } from "../../services/exams.service";
-import type { Exam, ExamDTOCreate } from "../../types/exam";
-
+import { useReducer } from "react";
+import { getExamById, getExams, getExamss, createExam as createExamService, updateExam as updateExamService, deleteExam as deleteExamService } from "../../services/exams.service";
+import { examReducer, initialState } from "../../reducers/exam-reducer";
+import type { ExamDTOCreate } from "../../types/exam";
 
 export const useExams = () => {
-    // EXAMS
-    const [exams, setExams] = useState<Exam[]>([]);
-    const [exam, setExam] = useState<Exam | null>(null);
+    const [state, dispatch] = useReducer(examReducer, initialState);
 
-    // INTERFAZ DE USUARIO
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    // EXAMS METHODS
     const fetchExams = async () => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
             const data = await getExams();
-            setExams(data);
+
+            dispatch({ type: "FETCH_SUCCESS", payload: data });
+
             return data;
         } catch (error) {
-            setError("Error al obtener los examenes");
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al obtener los examenes",
+            });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
-    const fetchExamsByTitle = async(titulo?:string) =>{
-
+    const fetchExamsByTitle = async (titulo?: string) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
-            const data = await getExamss({titulo});
-            setExams(data);
+            const data = await getExamss({ titulo });
+
+            dispatch({ type: "FETCH_SUCCESS", payload: data });
         } catch (error) {
-            setError("Error al obtener el titulo")
-        } finally{
-            setLoading(false);
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al buscar examenes",
+            });
         }
-    }
+    };
 
     const fetchExamById = async (id: number) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
             const data = await getExamById(id);
-            setExam(data.exam);
+
+            dispatch({
+                type: "FETCH_ONE_SUCCESS",
+                payload: data.exam,
+            });
+
             return data;
         } catch (error) {
-            setError("Error al obtener el examen");
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al obtener el examen",
+            });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
     const createExam = async (exam: ExamDTOCreate) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
             const response = await createExamService(exam);
             await fetchExams();
 
             return response;
         } catch (error) {
-            setError("Error al crear el examen");
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al crear el examen",
+            });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
     const updateExam = async (id: number, exam: ExamDTOCreate) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
             const response = await updateExamService(id, exam);
             await fetchExams();
 
             return response;
         } catch (error) {
-            setError("Error al actualizar el examen");
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al actualizar el examen",
+            });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
     const deleteExam = async (id: number) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: "FETCH_START" });
 
             const response = await deleteExamService(id);
             await fetchExams();
 
             return response;
         } catch (error) {
-            setError("Error al eliminar el examen");
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: "Error al eliminar el examen",
+            });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
-    const getByCourse = async(id: number) =>{
-        try {
-            setLoading(true);
-            setError(null);
-
-            const data = await getExamsByCourse(id);
-            setExams(data);
-            return data;
-        } catch (error) {
-            setError("Error al obtener los examenes");
-            throw error;
-        } finally{
-            setLoading(false);
-        }
-    }
     return {
-        exam,
-        exams,
-        loading,
-        error,
+        ...state,
         fetchExams,
         fetchExamById,
+        fetchExamsByTitle,
         createExam,
         updateExam,
         deleteExam,
-        getByCourse,
-        fetchExamsByTitle
-    }
-}
+    };
+};
