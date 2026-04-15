@@ -38,7 +38,7 @@ export const useUser = () => {
       
           const data = await getUsers({ rol: "estudiante" });
       
-          setStudents(data);
+          setStudents(data.data);
       
         } catch (error) {
           setError("Error al obtener estudiantes");

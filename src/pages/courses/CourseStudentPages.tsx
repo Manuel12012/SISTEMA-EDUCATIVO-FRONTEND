@@ -40,6 +40,7 @@ const CourseStudentsPage = () => {
     fetchStudents(); // 🔥 trae estudiantes del backend
     setModalOpen(true);
   };
+  console.log("allStudents:", allStudents);
 
   // formData
   const [formData, setFormData] = useState(

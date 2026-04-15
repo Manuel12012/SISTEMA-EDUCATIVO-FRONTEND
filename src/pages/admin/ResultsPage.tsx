@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
-import {useExamResults} from "../../hooks/admin/useExamResults";
-import type {ExamResult} from "../../types/examResult";
-import {FaEdit, FaTrash, FaSearch, FaRedo} from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { useExamResults } from "../../hooks/admin/useExamResults";
+import type { ExamResult } from "../../types/examResult";
+import { FaEdit, FaTrash, FaSearch, FaRedo } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const ResultsPage = () => {
   //exportacion de los metodos del hook
@@ -36,7 +36,7 @@ const ResultsPage = () => {
 
   //estado para mostrar los resultados
   const [displayedResults, setDisplayedResults] = useState<ExamResult[]>([]);
-
+  const [filtro, setFiltro] = useState("");
   //funcion para editar
   const handleEditClick = (result: ExamResult) => {
     // le pasamos como parametro result
@@ -61,6 +61,11 @@ const ResultsPage = () => {
     setDisplayedResults(examResults);
   }, [examResults]); // si examResults cambia entonces mostramos todos los resultados en el estado setDisplayedResults
 
+  const OpcionesFiltro = [
+    { value: "user", label: "Usuario" },
+    { value: "exam", label: "Examen" },
+    { value: "date", label: "Fecha" }
+  ];
   // si loading existe entonces mostramos
   if (loading)
     return (
@@ -83,8 +88,8 @@ const ResultsPage = () => {
   const promedio =
     totalResultados > 0
       ? Math.round(
-          examResults.reduce((acc, r) => acc + r.puntaje, 0) / totalResultados,
-        )
+        examResults.reduce((acc, r) => acc + r.puntaje, 0) / totalResultados,
+      )
       : 0;
 
   // retornamos
